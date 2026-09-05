@@ -1,0 +1,27 @@
+version: "3"
+services:
+  wireguard:
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC # Change to your timezone
+      - SERVERURL=auto # Optional, can be your dynamic DNS or IP
+      - SERVERPORT=51820
+      - PEERS=1 # Initial number of peers to create
+      - PEERDNS=auto
+      - INTERNAL_SUBNET=10.13.13.0 # Subnet for the VPN clients
+      - ALLOWEDIPS=0.0.0.0/0 # Route all traffic through VPN
+      - LOG_CONFS=true
+    volumes:
+      - ./config:/config
+      - /lib/modules:/lib/modules # Required for host kernel modules
+    ports:
+      - 51820:51820/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped

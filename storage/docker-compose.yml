@@ -1,0 +1,41 @@
+version: '3'
+
+volumes:
+  nextcloud:
+  db:
+
+networks:
+  nextcloud_net:
+
+services:
+  db:
+    image: postgres:15
+    container_name: nextcloud_db
+    restart: always
+    volumes:
+      - db:/var/lib/postgresql/data
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_DB=nextcloud
+    networks:
+      - nextcloud_net
+    # No ports exposed to the host for security
+
+  app:
+    image: nextcloud:latest
+    container_name: nextcloud_app
+    restart: always
+    ports:
+      - 8080:80
+    volumes:
+      - nextcloud:/var/www/html
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=nextcloud
+    depends_on:
+      - db
+    networks:
+      - nextcloud_net
