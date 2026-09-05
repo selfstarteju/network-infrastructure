@@ -2,6 +2,10 @@
 
 This document outlines the real-world test cases executed against the Network Command Center infrastructure. It provides empirical data and proof that the integration between the React frontend, Node.js backend, and Docker daemon functions correctly in a live environment.
 
+### Live Automation Test Demo
+Watch the automated test proving the full-stack integration:
+![Fullstack Test Recording](C:\Users\Admin\.gemini\antigravity-ide\brain\2cf537a5-18d8-457f-ae35-723efc71797e\fullstack_test_1788600348161.webp)
+
 ## 1. Live Container Status Monitoring
 
 **Objective:** Prove that the dashboard accurately reflects the real-time state of the infrastructure by polling the Docker socket.
